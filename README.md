@@ -1,6 +1,6 @@
 # SYENet
 
-Sorry guys, the regulations for releasing the code to opensource community are far more complex than that I could imagine. I will upload the code immediately after the required procedure is over.
+## Sorry guys, the regulations for releasing the code to opensource community are far more complex than that I could imagine. I will upload the code immediately after the required procedure is over.
 
 This repository contains the official implementation for SYENet ICCV 2023 paper:
 
