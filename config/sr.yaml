@@ -1,0 +1,35 @@
+exp_name: sr # <experiment name and  name of directory to save the experimental results and logs>
+
+train:
+  warmup: false
+  warmup_epoch: 10
+  lr_warmup: 1e-6
+  train_inp: D:\Data\DataSet\DIV2K\DIV2K_train\DIV2K_train_LR_bicubic_X2 # <path to the directory of low resolution input images for training>
+  train_gt: D:\Data\DataSet\DIV2K\DIV2K_train\DIV2K_train_HR # <path to the directory of rgb ground truth high resolution images for training>
+  valid_inp: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_LR_X2_bicubic # <path to the directory of low resolution input images for validation>
+  valid_gt: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_HR_X2 # <path to the directory of rgb ground truth high resolution images for validation>
+  patch_size: 64 # input image
+  batch_size: 4
+  epoch: 200
+  lr: 1e-4
+  num_workers: 0
+  save_every: 20
+  save_slim: true # re-parameterize the model and save the re-parameterized model
+
+test:
+  test_inp: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_LR_X2_bicubic # <path to the directory of low resolution input images for testing>
+  test_gt: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_HR_X2 # <path to the directory of ground truth high resolution images for testing>
+  num_workers: 8
+  save: true
+
+demo:
+  demo_inp: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_LR_X2_bicubic # <path to the directory of low resolution input images for demonstration>
+  num_workers: 8
+
+model:
+  type: original # [original, re-parameterized]: choose [original] model for training/inference or [re-parameterized] model for inference
+  pretrained: false # <path to the pretrained model>
+  need_slim: false # re-parameterize the original model
+  scale: 2 # scale factor 2 and 4 are supported, should have consistency with inp and gt image directory
+  rep_scale: 4
+  channels: 12
