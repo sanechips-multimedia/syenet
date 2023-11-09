@@ -1,0 +1,33 @@
+exp_name: isp # <experiment name and  name of directory to save the experimental results and logs>
+
+train:
+  warmup: true
+  warmup_epoch: 10
+  lr_warmup: 1e-6
+  train_inp: D:\Data\DataSet\ISP\train\raw # <path to the directory of raw input images for training>
+  train_gt: D:\Data\DataSet\ISP\train\rgb # <path to the directory of rgb ground truth images for training>
+  valid_inp: D:\Data\DataSet\ISP\test\raw # <path to the directory of raw input images for validation>
+  valid_gt: D:\Data\DataSet\ISP\test\rgb # <path to the directory of rgb ground truth images for validation>
+  batch_size: 4
+  epoch: 200
+  lr: 1e-3
+  num_workers: 0
+  save_every: 20
+  save_slim: true # re-parameterize the model and save the re-parameterized model
+
+test:
+  test_inp: D:\Data\DataSet\ISP\test\raw # <path to the directory of raw input images for testing>
+  test_gt: D:\Data\DataSet\ISP\test\rgb # <path to the directory of rgb ground truth images for testing>
+  num_workers: 0
+  save: false
+
+demo:
+  demo_inp: D:\Data\DataSet\ISP\demo # <path to the directory of raw input images for demonstration>
+  num_workers: 0
+
+model:
+  type: original # [original, re-parameterized]: load [original] model for training/inference or [re-parameterized] model for inference
+  pretrained: false # <path to the pretrained model>, not used if set false
+  need_slim: false # re-parameterize the original model, true only if type is original
+  rep_scale: 4
+  channels: 12
