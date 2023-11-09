@@ -19,12 +19,12 @@ train:
 test:
   test_inp: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_LR_X2_bicubic # <path to the directory of low resolution input images for testing>
   test_gt: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_HR_X2 # <path to the directory of ground truth high resolution images for testing>
-  num_workers: 8
+  num_workers: 0
   save: true
 
 demo:
   demo_inp: D:\Data\DataSet\BSD100\BSD100_valid\BSD100_X2\BSD100_LR_X2_bicubic # <path to the directory of low resolution input images for demonstration>
-  num_workers: 8
+  num_workers: 0
 
 model:
   type: original # [original, re-parameterized]: choose [original] model for training/inference or [re-parameterized] model for inference
