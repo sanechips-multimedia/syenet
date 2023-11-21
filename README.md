@@ -34,11 +34,30 @@ If you find our work useful in your research, please cite:
 ### Configuration
 
 Edit or create your own yaml(isp.yaml, lle.yaml, sr.yaml) files in ./config.
-The users are recommended to use basicsr for training our sr model. We provide the configuration file we utilized in the training by basicsr in ./config that are sr_basicsr_train.yaml and sr_basicsr_test.yaml.
 
-### Demonstration
+The users are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) for training our sr models. We put the train/test configuration files for training/testing our sr models using basicsr in ./config, which are sr_basicsr_train.yaml and sr_basicsr_test.yaml.
+
+### Train
+
+If you want to re-parameterize the model and save it, please set model->need_slim in the configuration yaml file to be 'true'. And hence, the re-parameterized small model for fast inference will be saved.
+
+For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage.
 
 ```bash
-python main.py -task demo -model_type original -model_task [isp,lle,sr] -device cuda
+python main.py -task train -model_type original -model_task isp/lle/sr -device cuda
 ```'
 
+### Test
+
+Test the model
+```bash
+python main.py -task test -model_type original -model_task isp/lle/sr -device cuda
+```'
+
+### Demo
+
+```bash
+python main.py -task demo -model_type original -model_task isp/lle/sr -device cuda
+```'
+
+### Reparameterizing the model
