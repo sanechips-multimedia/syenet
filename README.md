@@ -68,5 +68,3 @@ You could save the images generated in the test by setting demo $\rightarrow$ sa
 ```bash
 python main.py -task demo -model_type original -model_task isp/lle/sr -device cuda
 ```
-
-### Reparameterizing the model
