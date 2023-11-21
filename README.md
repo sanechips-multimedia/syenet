@@ -1,10 +1,12 @@
 # SYENet
 
-This repository contains the official implementation for SYENet ICCV 2023 paper:
+This repository contains the official implementation for ICCV 2023 paper:
 
 [SYENet: A Simple Yet Effective Network for Multiple Low-Level Vision Tasks with Real-Time Performance on Mobile Device](https://openaccess.thecvf.com/content/ICCV2023/papers/Gou_SYENet_A_Simple_Yet_Effective_Network_for_Multiple_Low-Level_Vision_ICCV_2023_paper.pdf)
 
 Weiran Gou, Ziyao Yi, Yan Xiang, Shaoqing Li, Zibin Liu, Dehui Kong, Ke Xu. [[arxiv]](https://arxiv.org/abs/2308.08137)
+
+SYENet is an efficient network that could handle multiple low-level vision (isp, lle and sr) tasks. SYENet utilises re-parameterization for fast inference and got the highest score in [MAI 2022 Learned Smartphone Challenge](https://arxiv.org/abs/2211.03885).
 
 ### Citation
 
@@ -33,31 +35,31 @@ If you find our work useful in your research, please cite:
 
 ### Configuration
 
-Edit or create your own yaml(isp.yaml, lle.yaml, sr.yaml) files in ./config.
+Edit the yaml files (isp.yaml, lle.yaml, sr.yaml) in ./config.
 
-The users are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) for training our sr models. We put the train/test configuration files for training/testing our sr models using basicsr in ./config, which are sr_basicsr_train.yaml and sr_basicsr_test.yaml.
+You are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) to train our sr models. We put the train/test configuration files for training/testing our sr models using basicsr in ./config, which are sr_basicsr_train.yaml and sr_basicsr_test.yaml.
 
 ### Train
 
-If you want to re-parameterize the model and save it, please set model->need_slim in the configuration yaml file to be 'true'. And hence, the re-parameterized small model for fast inference will be saved.
+If you want to re-parameterize the model and save it, please set model $\rightarrow$ need_slim in the configuration yaml file to be 'true'. And hence, the re-parameterized small model for fast inference will be saved.
 
-For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage.
+For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage. This phase could be cancalled by setting train $\rightarrow$ warmup to be false.
 
 ```bash
 python main.py -task train -model_type original -model_task isp/lle/sr -device cuda
-```'
+```
 
 ### Test
 
 Test the model
 ```bash
 python main.py -task test -model_type original -model_task isp/lle/sr -device cuda
-```'
+```
 
 ### Demo
 
 ```bash
 python main.py -task demo -model_type original -model_task isp/lle/sr -device cuda
-```'
+```
 
 ### Reparameterizing the model
