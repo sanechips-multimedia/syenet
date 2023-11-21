@@ -53,7 +53,7 @@ python main.py -task train -model_type original -model_task isp/lle/sr -device c
 
 Set the 'model $\rightarrow$ type' parameter in the configuration yaml file to be original if you are loading an original pretrained model, otherwise, set it to be re-parameterized for loading a re-parameterized model.
 
-If you are loading an original pretrained model, but you want to re-parameterize it before inference, you could set 'model $rightarrow$ need_slim' parameter in the configuration yaml file to be true. Notice that you cannot re-parameterize a re-parameterized model.
+If you are loading an original pretrained model, but you want to re-parameterize it before inference, you could set 'model $\rightarrow$ need_slim' parameter in the configuration yaml file to be true. Notice that you cannot re-parameterize a re-parameterized model.
 
 You could save the images generated in the test by setting 'test $\rightarrow$ save' parameter in the configuration yaml file to be true.
 
