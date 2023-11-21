@@ -41,9 +41,9 @@ You are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) to 
 
 ### Train
 
-If you want to re-parameterize the model and save it, please set model $\rightarrow$ need_slim in the configuration yaml file to be 'true'. And hence, the re-parameterized small model for fast inference will be saved.
+If you want to re-parameterize the model and save it, please set train $\rightarrow$ save_slim parameter in the configuration yaml file to be 'true'. And hence, the re-parameterized small model for fast inference will be saved.
 
-For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage. This phase could be cancalled by setting train $\rightarrow$ warmup to be false.
+For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage. This phase could be cancalled by setting train $\rightarrow$ warmup in the configuration yaml file to be false.
 
 ```bash
 python main.py -task train -model_type original -model_task isp/lle/sr -device cuda
@@ -51,12 +51,19 @@ python main.py -task train -model_type original -model_task isp/lle/sr -device c
 
 ### Test
 
-Test the model
+Set the model $\rightarrow$ type in the configuration yaml file to be original if you are loading an original pretrained model, otherwise, set it to be re-parameterized for loading a re-parameterized model.
+
+If you are loading an original pretrained model, but you want to re-parameterize it before inference, you could set model $rightarrow$ need_slim in the configuration yaml file to be true. Notice that you cannot re-parameterize a re-parameterized model.
+
+You could save the images generated in the test by setting test $\rightarrow$ save in the configuration yaml file to be true.
+
 ```bash
 python main.py -task test -model_type original -model_task isp/lle/sr -device cuda
 ```
 
 ### Demo
+
+You could save the images generated in the test by setting demo $\rightarrow$ save in the configuration yaml file to be true.
 
 ```bash
 python main.py -task demo -model_type original -model_task isp/lle/sr -device cuda
