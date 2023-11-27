@@ -341,8 +341,21 @@ class DropBlock(nn.Module):
 
 
 class ResBlock(nn.Module):
-    def __init__(self, num_feat=4):
+    def __init__(self, num_feat=4, rep_scale=4):
         super(ResBlock, self).__init__()
+        self.conv1 = ConvRep3(num_feat, num_feat, rep_scale=rep_scale)
+        self.conv2 = ConvRep3(num_feat, num_feat, rep_scale=rep_scale)
+        self.relu = nn.ReLU(inplace=True)
+
+    def forward(self, x):
+        identity = x
+        out = self.conv2(self.relu(self.conv1(x)))
+        return identity + out
+
+
+class ResBlockS(nn.Module):
+    def __init__(self, num_feat=4):
+        super(ResBlockS, self).__init__()
         self.conv1 = nn.Conv2d(num_feat, num_feat, 3, 1, 1, bias=True)
         self.conv2 = nn.Conv2d(num_feat, num_feat, 3, 1, 1, bias=True)
         self.relu = nn.ReLU(inplace=True)
