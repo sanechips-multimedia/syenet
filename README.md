@@ -37,7 +37,7 @@ If you find our work useful in your research, please cite:
 
 Edit the yaml files (isp.yaml, lle.yaml, sr.yaml) in ./config.
 
-You are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) to train our sr models. We put the train/test configuration files for training/testing our sr models using basicsr in ./config, which are sr_basicsr_train.yaml and sr_basicsr_test.yaml.
+You are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) to train our sr models to get higher PSNR. We put the train/test configuration files for training/testing our sr models using basicsr in ./config, which are sr_basicsr_train.yaml and sr_basicsr_test.yaml.
 
 ### Train
 
