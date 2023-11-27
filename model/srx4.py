@@ -9,7 +9,8 @@ from .utils import (
     QuadraticConnectionUnitS,
     AdditionFusion,
     AdditionFusionS,
-    ResBlock
+    ResBlock,
+    ResBlockS
 )
 
 
@@ -17,7 +18,19 @@ class PrePyramidL1(nn.Module):
     def __init__(self, num_feat, rep_scale=4):
         super(PrePyramidL1, self).__init__()
         self.conv_first = ConvRep3(num_feat, num_feat, rep_scale=rep_scale)
-        self.resblock = ResBlock(num_feat=num_feat)
+        self.resblock = ResBlock(num_feat=num_feat, rep_scale=rep_scale)
+
+    def forward(self, x):
+        feat_l1 = self.conv_first(x)
+        feat_l1 = self.resblock(feat_l1)
+        return feat_l1
+
+
+class PrePyramidL1S(nn.Module):
+    def __init__(self, num_feat):
+        super(PrePyramidL1S, self).__init__()
+        self.conv_first = nn.Conv2d(num_feat, num_feat, 3, 1, 1)
+        self.resblock = ResBlockS(num_feat=num_feat)
 
     def forward(self, x):
         feat_l1 = self.conv_first(x)
@@ -26,11 +39,10 @@ class PrePyramidL1(nn.Module):
 
 
 class PrePyramidL2(nn.Module):
-    def __init__(self, num_feat, rep_scale):
+    def __init__(self, num_feat, rep_scale=4):
         super(PrePyramidL2, self).__init__()
-        self.num_feat = num_feat
         self.conv_first = ConvRep3(num_feat, num_feat, rep_scale=rep_scale)
-        self.resblock = ResBlock(num_feat=num_feat)
+        self.resblock = ResBlock(num_feat=num_feat, rep_scale=rep_scale)
 
     def forward(self, x):
         feat_l2 = F.max_pool2d(x, kernel_size=3, stride=2, padding=1)
@@ -42,24 +54,12 @@ class PrePyramidL2(nn.Module):
         return feat_l2
 
 
-class PrePyramidL1S(nn.Module):
-    def __init__(self, num_feat):
-        super(PrePyramidL1S, self).__init__()
-        self.conv_first = nn.Conv2d(3, num_feat, 3, 1, 1)
-        self.resblock = ResBlock(num_feat=num_feat)
-
-    def forward(self, x):
-        feat_l1 = self.conv_first(x)
-        feat_l1 = self.resblock(feat_l1)
-        return feat_l1
-
-
 class PrePyramidL2S(nn.Module):
     def __init__(self, num_feat):
         super(PrePyramidL2S, self).__init__()
         self.conv_first = nn.Conv2d(3, num_feat, 3, 1, 1)
         self.conv_up = nn.Conv2d(num_feat, num_feat*4, 3, 1, 1)
-        self.resblock = ResBlock(num_feat=num_feat)
+        self.resblock = ResBlockS(num_feat=num_feat)
 
     def forward(self, x):
         feat_l2 = F.max_pool2d(x, kernel_size=3, stride=2, padding=1)
@@ -80,7 +80,7 @@ class SYESRX4Net(nn.Module):
         self.img_range = img_range
         self.mean = torch.Tensor(rgb_mean).view(1, 3, 1, 1)
         self.headpre = AdditionFusion(PrePyramidL1(3, rep_scale=rep_scale), PrePyramidL2(3, rep_scale=rep_scale), 3)
-        self.resblock = ResBlock(num_feat=3)
+        self.resblock = ResBlock(num_feat=3, rep_scale=rep_scale)
         self.head = QuadraticConnectionUnit(
             nn.Sequential(
                 ConvRep5(3, channels, rep_scale=rep_scale),
@@ -153,7 +153,7 @@ class SYESRX4NetS(nn.Module):
         self.img_range = img_range
         self.mean = torch.Tensor(rgb_mean).view(1, 3, 1, 1)
         self.headpre = AdditionFusionS(PrePyramidL1S(3), PrePyramidL2S(3), 3)
-        self.resblock = ResBlock(num_feat=3)
+        self.resblock = ResBlockS(num_feat=3)
         self.head = QuadraticConnectionUnitS(
             nn.Sequential(
                 nn.Conv2d(3, channels, 5, 1, 2),
