@@ -58,7 +58,6 @@ class PrePyramidL2S(nn.Module):
     def __init__(self, num_feat):
         super(PrePyramidL2S, self).__init__()
         self.conv_first = nn.Conv2d(3, num_feat, 3, 1, 1)
-        self.conv_up = nn.Conv2d(num_feat, num_feat*4, 3, 1, 1)
         self.resblock = ResBlockS(num_feat=num_feat)
 
     def forward(self, x):
@@ -79,7 +78,11 @@ class SYESRX4Net(nn.Module):
         self.channels = channels
         self.img_range = img_range
         self.mean = torch.Tensor(rgb_mean).view(1, 3, 1, 1)
-        self.headpre = AdditionFusion(PrePyramidL1(3, rep_scale=rep_scale), PrePyramidL2(3, rep_scale=rep_scale), 3)
+        self.headpre = AdditionFusion(
+            PrePyramidL1(3, rep_scale=rep_scale),
+            PrePyramidL2(3, rep_scale=rep_scale),
+            3
+        )
         self.resblock = ResBlock(num_feat=3, rep_scale=rep_scale)
         self.head = QuadraticConnectionUnit(
             nn.Sequential(
@@ -103,10 +106,10 @@ class SYESRX4Net(nn.Module):
             nn.Sigmoid()
         )
         self.tail = nn.Sequential(
-            ConvRep3(channels, channels*4, rep_scale=rep_scale),
+            ConvRep3(channels, 48, rep_scale=rep_scale),
             nn.PixelShuffle(2),
             nn.PixelShuffle(2),
-            nn.Conv2d(3, 3, 3, 1, 1)
+            ConvRep3(3, 3, rep_scale=rep_scale)
         )
 
     def forward(self, x):
@@ -177,7 +180,7 @@ class SYESRX4NetS(nn.Module):
         )
 
         self.tail = nn.Sequential(
-            nn.Conv2d(channels, channels*4, 3, 1, 1),
+            nn.Conv2d(channels, 48, 3, 1, 1),
             nn.PixelShuffle(2),
             nn.PixelShuffle(2),
             nn.Conv2d(3, 3, 3, 1, 1)
