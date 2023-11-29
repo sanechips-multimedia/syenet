@@ -306,26 +306,25 @@ class QuadraticConnectionUnitS(nn.Module):
 
 
 class AdditionFusion(nn.Module):
-    def __init__(self, block1, block2, channels):
+    def __init__(self, addend1, addend2, channels):
         super(AdditionFusion, self).__init__()
-        self.block1 = block1
-        self.block2 = block2
-        self.scale = 0.1
+        self.addend1 = addend1
+        self.addend2 = addend2
         self.bias = nn.Parameter(torch.randn((1, channels, 1, 1)))
 
     def forward(self, x):
-        return self.block1(x) + self.block2(x) + self.bias
+        return self.addend1(x) + self.addend2(x) + self.bias
 
 
 class AdditionFusionS(nn.Module):
-    def __init__(self, block1, block2, channels):
+    def __init__(self, addend1, addend2, channels):
         super(AdditionFusionS, self).__init__()
-        self.block1 = block1
-        self.block2 = block2
+        self.addend1 = addend1
+        self.addend2 = addend2
         self.bias = nn.Parameter(torch.randn((1, channels, 1, 1)))
 
     def forward(self, x):
-        return self.block1(x) + self.block2(x) + self.bias
+        return self.addend1(x) + self.addend2(x) + self.bias
 
 
 class DropBlock(nn.Module):
