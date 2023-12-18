@@ -91,4 +91,4 @@ def import_loss(training_task):
     elif training_task == 'warmup':
         return LossWarmup()
     else:
-        raise ValueError('unknown task, please choose from [train, test, demo].')
+        raise ValueError('unknown training task, please choose from [isp, lle, sr, warmup].')
