@@ -43,7 +43,7 @@ You are recommended to use [basicsr](https://github.com/XPixelGroup/BasicSR) to 
 
 If you want to re-parameterize the model and save it, please set 'train $\rightarrow$ save_slim' parameter in the configuration yaml file to be true. And hence, the re-parameterized small model for fast inference will be saved.
 
-For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage. This phase could be cancalled by setting 'train $\rightarrow$ warmup' parameter in the configuration yaml file to be false.
+For isp and lle tasks, we utilise a warmup phase which is a self-supervised training stage. This phase could be cancelled by setting 'train $\rightarrow$ warmup' parameter in the configuration yaml file to be false.
 
 ```bash
 python main.py -task train -model_type original -model_task isp/lle/sr -device cuda
